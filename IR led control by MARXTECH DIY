@@ -1,0 +1,47 @@
+#include <IRremote.h>
+
+int RED = 3;
+int GREEN = 4;
+int BLUE = 5;
+
+int IR_RECEIVE_PIN = 2;
+IRrecv IrReceiver(IR_RECEIVE_PIN);
+decode_results results;
+
+void setup(){
+  Serial.begin(9600);
+  IrReceiver.enableIRIn();
+
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+}
+void loop(){
+  if(IrReceiver.decode(&results))
+  switch (results.value) {
+          
+    case 0xFF30CF:
+    Serial.println("case: RED led");
+    digitalWrite(3, HIGH);
+    delay(3000);
+    digitalWrite(3, LOW);
+    break;
+    
+    case 0xFF18E7:
+    Serial.println("case: GREEN led");
+    digitalWrite(4, HIGH);
+    delay(3000);
+    digitalWrite(4, LOW);
+    break;
+
+    case 0xFF7A85:
+    Serial.println("case: BLUE led");
+    digitalWrite(5, HIGH);
+    delay(3000);
+    digitalWrite(5, LOW);
+    break;
+
+    Serial.println(results.value, HEX);
+    IrReceiver.resume();
+}
+}
