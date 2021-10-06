@@ -17,7 +17,7 @@ void setup(){
   pinMode(5, OUTPUT);
 }
 void loop(){
-  if(IrReceiver.decode(&results))
+  if(IrReceiver.decode(&results)) {
   switch (results.value) {
           
     case 0xFF30CF:
@@ -43,5 +43,6 @@ void loop(){
 
     Serial.println(results.value, HEX);
     IrReceiver.resume();
+}
 }
 }
